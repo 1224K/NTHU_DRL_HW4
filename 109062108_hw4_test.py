@@ -68,7 +68,7 @@ class Agent(nn.Module):
         self.init_obs = None
         self.init_state = None
         self.load_state_dict(torch.load('109062108_hw4_data'))
-        self.seed = 3
+        self.seed = 5
 
     def act(self, obs):
         obs = dict_to_tensor(obs)
@@ -88,19 +88,19 @@ class Agent(nn.Module):
         logstd = self.log_std.expand_as(mean)
         dist = distributions.Normal(mean, torch.exp(logstd))
         self.action = dist.sample()[0]
+        self.action = np.clip(np.array(self.action), 0.0, 1.0)
         return self.action
     
 if __name__ == '__main__':
     env = L2M2019Env(visualize=True, difficulty=2)
     total_reward = 0.0
     agent = Agent()
-    agent.eval()
     for _ in range(5):
         observation = env.reset()
         reward_sum = 0.0
         agent.step = 0
         done = False
-        agent.seed = _
+        # agent.seed = _
         while not done:
             # make a step given by the controller and record the state and the reward
             act = agent.act(observation)
