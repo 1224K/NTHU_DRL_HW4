@@ -68,7 +68,7 @@ class Agent(nn.Module):
         self.init_obs = None
         self.init_state = None
         self.load_state_dict(torch.load('109062108_hw4_data'))
-        self.seed = 17
+        self.seed = 115
 
     def act(self, obs):
         obs = dict_to_tensor(obs)
